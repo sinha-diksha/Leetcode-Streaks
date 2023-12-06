@@ -29,6 +29,7 @@ Constraints:
 #include <bits/stdc++.h>
 using namespace std;
 
+/*Approach 1*/
 int totalMoney(int n)
 {
   int prev = 1;
@@ -45,11 +46,65 @@ int totalMoney(int n)
     else
     {
       prev = 1 + prev;
-      ans = 1 + prev;
+      ans += prev;
     }
   }
   return ans;
-}
+} // Time complexity: O(n), Space Complexity: O(n)
+
+// Approach 2
+int totalMoney2(int n)
+{
+  int ans = 1;
+  int monPrev = 1;
+  int prev = 1;
+  for (int i = 1; i < n; i++)
+  {
+    if ((i % 7) == 0)
+    {
+      monPrev += 1;
+      ans += monPrev;
+      prev = monPrev;
+    }
+    else
+    {
+      prev += 1;
+      ans += prev;
+    }
+  }
+  return ans;
+} // time Compleity:O(n) Space Complexity:O(1)
+
+// Approach 3
+int totalMoney3(int n)
+{
+  int monday = 1;
+  int ans = 0;
+  while (n > 0)
+  {
+    for (int i = 0; i < min(7, n); i++)
+    {
+      ans += (monday + i);
+    }
+    monday++;
+    n -= 7;
+  }
+  return ans;
+} // time Complexity:O(n) Space Complexity:O(1)
+
+int totalMoney4(int n)
+{
+  int sum = 0;
+  int k = n / 7;
+  sum = (k * (2 * 28 + (k - 1) * 7)) / 2;
+  int monday = 1 + k;
+  for (int i = 0; i < n % 7; i++)
+  {
+    sum += (monday + i);
+  }
+
+  return sum;
+} // T.C: O(1), S.C: O(1)
 
 int main()
 {
@@ -60,5 +115,8 @@ int main()
     int n;
     cin >> n;
     cout << totalMoney(n) << endl;
+    cout << totalMoney2(n) << endl;
+    cout << totalMoney3(n) << endl;
+    cout << totalMoney4(n) << endl;
   }
 }
